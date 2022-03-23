@@ -9,9 +9,7 @@ module.exports.getLista = async function (application, req, res) {
         var itemLista = new application.app.models.itemLista(application);
 
         const result = await itemLista.getLista(userId);
-
-        console.log(result)
-
+        
         res.status(200).send(result); 
 
 
@@ -29,10 +27,12 @@ module.exports.addItemLista = async function (application, req, res) {
     try {
 
         var idAnime = req.body.id_anime;
+        
+        const userId = req.userId;        
 
         var itemLista = new application.app.models.itemLista(application);
 
-        const result = await itemLista.addItemLista(idAnime);
+        const result = await itemLista.addItemLista(idAnime, userId);
 
         console.log(result.statusCod)
 

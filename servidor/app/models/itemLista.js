@@ -12,23 +12,6 @@ class ItemLista {
         this.animeDAO = new application.app.models.animeDAO(application.config.dbConnection)
     }
 
-    async criarListaUsuario (userId) {
-
-        try {
-    
-            const listaAnimesResult = await this.itemListaDAO.criarLista(userId);
-                
-            return listaAnimesResult[0];
-    
-        } catch (e) {
-    
-            console.log(e);
-    
-            return new UserException(e);
-    
-        }
-    }
-
     async getLista (userId) {
 
         try {
@@ -83,7 +66,7 @@ class ItemLista {
         }
     }
 
-    async addItemLista (idAnime) {
+    async addItemLista (idAnime, userId) {
 
         try {
             
@@ -94,9 +77,14 @@ class ItemLista {
                 return {statusCod: 400, msg:"Esse anime ja foi adicionado a sua lista!"};
 
             } else{
+
+                const id_lista = await this.itemListaDAO.FindListaByUser(userId);
+
+                console.log(id_lista[0].id_lista)
     
                 var itemLista = {
                     id_anime: idAnime,
+                    id_lista: id_lista[0].id_lista,
                     status: "Assistindo"
                 };
     

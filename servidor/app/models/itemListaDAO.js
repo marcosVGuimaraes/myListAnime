@@ -26,6 +26,18 @@ itemListaDAO.prototype.FindById = async function(id_itemLista){
 
 }
 
+itemListaDAO.prototype.FindListaByUser = async function(id_usuario){
+
+	const sql = "SELECT id_lista FROM lista WHERE id_usuario = " + id_usuario;
+
+	console.log(sql)
+	
+	const retorno = await this._connection.query(sql);
+
+	return retorno[0];
+
+}
+
 itemListaDAO.prototype.FindByIdAnime = async function(id_anime){
 
 	const retorno = await this._connection.query("SELECT il.*, (SELECT qnt_eps FROM animes where animes.id_anime = il.id_anime) as qnt_eps, (SELECT COUNT(*) FROM eps_assistidos as ea INNER JOIN eps_anime ep ON (ea.id_ep_anime = ep.id_ep_anime) WHERE ep.id_anime = a.id_anime) as eps_assistidos, (SELECT eps_assistidos.dt_assistido from eps_assistidos WHERE eps_assistidos.id_itemLista = il.id_itemLista ORDER BY eps_assistidos.dt_assistido DESC LIMIT 1) as ultimaVez_assistido , a.* from item_lista as il inner join animes as a ON (il.id_anime = a.id_anime) where il.id_anime = " + id_anime +" order by a.nome_anime");
