@@ -136,11 +136,7 @@ class Crawler {
             const animesParaAtualizar = await this.animeModel.buscarAnimesComNovosEpLancados();
     
             console.log("Animes que tem episodios novos episodios encontrados...");
-            
-            //var connection = application.config.dbConnection;
-    
-            //var episodioModel = new application.app.models.episodioAnimeDAO(connection);
-    
+                        
             console.log(animesParaAtualizar);
     
             if(animesParaAtualizar.length > 0){
@@ -180,9 +176,7 @@ class Crawler {
                         cont = cont + 1;
                     
                     });    
-        
-                    // console.log(novosEpsAnimes)
-                    
+                          
                     if(novosEpsAnimes.length > 0){
         
                         const result = await this.episodioModel.cadEpsAnime(novosEpsAnimes);
